@@ -1,0 +1,143 @@
+" for vundle ########################
+set nocompatible              " be iMproved, required
+filetype off                  " required
+let mapleader="\<Space>"
+set listchars=tab:>-,trail:·
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'qpkorr/vim-bufkill'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'L9'
+" Git plugin not hosted on GitHub
+" Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+" Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+Plugin 'https://github.com/majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
+
+Plugin 'https://github.com/kien/ctrlp.vim'
+let g:ctrlp_map = '<leader><leader>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+    \ }
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
+"let g:ctrlp_user_command = 'find %s -type f'
+
+Bundle 'tacahiroy/ctrlp-funky'
+nnoremap <Leader>o :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>O :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+let g:ctrlp_funky_syntax_highlight = 1
+let g:ctrlp_extensions = ['funky']
+
+Plugin 'https://github.com/rking/ag.vim'
+"nmap <c-t> :Ag! "<left>. Ag!
+let g:ag_prg='ag -S --nocolor --nogroup --column --ignore sitedata --ignore image --ignore "tags"'
+command Agg exe 'Ag! -Q ' . expand('<cword>')
+nnoremap <Leader>f :execute 'Ag! -Q ' . expand('<cword>')<Cr>
+
+Plugin 'https://github.com/scrooloose/nerdtree.git'
+" NERD tree
+let NERDChristmasTree=0
+let NERDTreeWinSize=50
+let NERDTreeChDirMode=2
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
+let NERDTreeShowBookmarks=1
+let NERDTreeWinPos="left"
+
+" Automatically open a NERDTree if no files where specified
+" autocmd vimenter * if !argc() | NERDTree | endif
+" Close vim if the only window left open is a NERDTree
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" Open a NERDTree
+nmap <F5> :NERDTreeToggle<cr>
+
+" Plugin 'https://github.com/Valloric/YouCompleteMe.git'
+Bundle 'Valloric/YouCompleteMe'
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+nnoremap <leader>n :bn<CR>
+nnoremap <leader>p :bp<CR>
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+" ##########################################
+
+set number
+set relativenumber
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf-8
+set pastetoggle=<F9>
+
+if &term =~ "xterm"
+  " 256 colors
+  let &t_Co = 256
+  " restore screen after quitting
+  let &t_ti = "\<Esc>7\<Esc>[r\<Esc>[?47h"
+  let &t_te = "\<Esc>[?47l\<Esc>8"
+  if has("terminfo")
+    let &t_Sf = "\<Esc>[3%p1%dm"
+    let &t_Sb = "\<Esc>[4%p1%dm"
+  else
+    let &t_Sf = "\<Esc>[3%dm"
+    let &t_Sb = "\<Esc>[4%dm"
+  endif
+endif
+
+hi Normal guibg=#CCE8CF
+set expandtab
+set tabstop=4
+set shiftwidth=4
+"set hlsearch
+set ignorecase
+set smartcase
+set runtimepath^=~/.vim/bundle/ag
+nnoremap <leader>q :BD<CR>
+nnoremap <Leader>l :ls<CR>
+
+syntax enable
+
+"set background=dark
+"colorscheme solarized
